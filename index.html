@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Andrew Delos Reyes - Cover Letter App</title>
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+  </head>
+  <body>
+
+  <style>
+    body {
+      font-family: Helvetica;
+      padding: 0;
+      margin: 0;
+    }
+    .col {
+      text-align: center;
+      position:relative;
+      width: 80%;
+      margin: 0 auto;
+    }
+    .col-left > div {
+      position: relative;
+      margin-top: 20px;
+      z-index: 99;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+    .col-left:after {
+      content: " ";
+      position: absolute;
+      top: 12px;
+      width: 84%;
+      background: #75c9dc;
+      height: 3px;
+      left: 49%;
+      margin-left: -41%;
+    }
+    .col-right {
+      margin-top: 50px;
+    }
+    .section {
+      transition: opacity 0.3s;
+      margin: 0 auto;
+      position:absolute;
+      top: -3000%;
+      left: 50%;
+      margin-left: -50%;
+      opacity: 0;
+    }
+    .section--active {
+      opacity:1;
+      top: 15%;
+    }
+
+    .section p {
+      font-size: 1.1rem;
+      line-height: 1.3rem;
+      font-weight: 300;
+      color: #9e9e9e;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    .section h2 {
+      font-size: 2rem;
+      color: #75c9dc;
+    }
+    .positioner-point {
+      cursor: pointer;
+      background: #75c9dc;
+      border-radius: 50%;
+      width: 15px;
+      height: 15px;
+      line-height: 15px;
+      margin: auto;
+    }
+    .positioner-point:hover {
+      background: #9b9b9b;
+      transition: background 0.3s;
+    }
+    .positioner--active {
+      width: 25px;
+      height: 25px;
+      cursor:auto;
+      background: #75c9dc;
+    }
+    .positioner--active:hover {
+      background: #75c9dc;
+      width: 25px;
+      height: 25px;
+    }
+    .fa {
+      font-size: 6rem;
+      margin-top: 30px;
+      color: #75c9dc;
+    }
+
+    @media (min-width: 768px) {
+      .section {
+        width: 100%;
+      }
+      .section p {
+        font-size: 1.5rem;
+        line-height: 1.9rem;
+        margin-bottom: 100px;
+      }
+      .col {
+        width: 70%;
+        margin: 0 auto;
+      }
+      .col-right {
+        padding-top: 15%
+      }
+      body {
+        padding-top: 6%;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      .col {
+        width: 60%;
+      }
+    }
+
+  </style>
+    <div id="root"></div>
+    <script type="text/babel">
+
+
+      class Section extends React.Component {
+        constructor(props) {
+          super(props);
+        }
+
+        render() {
+          return (
+            <div className={`section ${this.props.isActive ? 'section--active': ''}`}>
+              <i className={`fa ${this.props.icon}`}></i>
+              <h2>{this.props.heading}</h2>
+              <p>{this.props.content}</p>
+            </div>
+          );
+        }
+      }
+
+      class Positioner extends React.Component {
+        constructor(props) {
+          super(props);
+        }
+
+        render() {
+          return (
+            <div>
+              {this.props.state.sections.map(section => (
+                <div className={`positioner-point ${section.isActive ? 'positioner--active': ''}`} key={`button-${section.id}`} onClick={() => {this.props.onClick(section.id)}}></div>
+                ))}
+            </div>
+          );
+        }
+      }
+
+
+      class Cover extends React.Component {
+        constructor(props) {
+          super(props);
+          
+          this.state = {
+            sections: [
+              {
+                title: 'intro',
+                content: 'Hi! My name is Andrew Delos Reyes. I\'m a Front End Developer on the Marketing Web Ops team for Thomson Reuters Tax & Accounting. I built this simple app using ReactJS as a creative cover letter to showcase some of my skills.',
+                id: 1,
+                isActive: true,
+                icon: 'fa-grin',
+                heading: 'Hi!'
+              },
+              {
+                title: 'about',
+                content: 'I have been on my current team for almost 3 years, now. Prior to joining, I was a developer/designer for a team that migrated an ecommerce site onto Adobe Experience Manager. There, I played a key role in building components using Sightly (a language by Adobe), and presenting UI designs for the new platform. Before that, I was a Digital Marketing Manager at a startup telecom, where I was broadly in charge of web properties and designed a few of their customer-facing sites.',
+                id: 2,
+                isActive: false,
+                icon: 'fa-laptop-code',
+                heading: 'About me'
+              },
+              {
+                title: 'interest',
+                content: 'I\'m interested in this Front End Engineer role at COMPANY_NAME because REASON. Quod dicta odit at quia. Vel et maiores perspiciatis harum itaque repellendus modi. Et vel temporibus reiciendis quaerat laudantium mollitia vitae et. Ipsum doloribus voluptate atque. Autem suscipit et cum voluptas nesciunt omnis quis.',
+                id: 3,
+                isActive: false,
+                icon: 'fa-comment-dots',
+                heading: 'I\m interested'
+              },
+              {
+                title: 'considerations',
+                content: 'Another reason the job post interests me is REASON. Molestiae sunt molestiae sed voluptatem culpa non. Debitis dignissimos possimus rem. Modi hic excepturi id enim quia. Consequuntur velit maxime praesentium libero. Id eos rerum aut et.',
+                id: 4,
+                isActive: false,
+                icon: 'fa-compress',
+                heading: 'Considerations'
+              }, 
+              {
+                title: 'forward',
+                content: 'I\'m very interested in learning more about your team, how you work, and the types of projects you handle. Rem nisi dolor quia ut aspernatur eum est rerum. Illo facere omnis corrupti eligendi. Expedita similique qui sit. Quia quibusdam non maxime. Eum reprehenderit est debitis a sed. Aspernatur repudiandae voluptas nam aut eaque est beatae ab.',
+                id: 5,
+                isActive: false,
+                icon: 'fa-cubes',
+                heading: 'Opportunity'
+              },
+              {
+                title: 'closing',
+                content: 'Thank you for your time, and I look forward to hearing from you! Feel free to pick through the source code of this app. I\'d be glad to discuss how I put this together during an interview. —Andrew Delos Reyes',
+                id: 6,
+                isActive: false,
+                icon: 'fa-handshake',
+                heading: 'Thank you'
+              }  
+            ]
+          };
+        }
+
+        makeActive (clickedId) {
+          const clonedSections = [...this.state.sections];
+
+          clonedSections.forEach(section => {
+            section.isActive = false;
+          });
+
+          const clickedSection = clonedSections.find(section => section.id === clickedId);
+
+          clickedSection.isActive = true;
+
+          this.setState({ sections: clonedSections });
+        }
+        
+
+        render () {
+          return (
+            <div className="row">
+              <div className="col col-left">
+                <Positioner 
+                  state={this.state}
+                  onClick={id => (this.makeActive(id))} />
+              </div>
+              <div className="col col-right">
+                {this.state.sections.map(section => (
+                  <Section 
+                    key={section.id} 
+                    content={section.content} 
+                    isActive={section.isActive} 
+                    id={section.id}
+                    icon={section.icon} 
+                    heading={section.heading}/>
+                ))}
+              </div>
+            </div>
+          );
+        }
+      }
+
+      ReactDOM.render(
+        <Cover />,
+        document.getElementById('root')
+      );
+
+    </script>
+
+    
+  </body>
+</html>
